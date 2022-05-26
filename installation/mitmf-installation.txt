@@ -1,0 +1,11 @@
+MITMf Installation
+
+$ wget https://raw.githubusercontent.com/koparmalbaris/csv-to-excel/main/get-pip2.py
+$ python2 get-pip2.py
+$ sudo apt-get install python-setuptools
+$ sudo apt-get install libpcap-dev build-essential python-dev libnetfilter-queue-dev 
+$ pip2 install pycrypto && pip2 install pyinotify && pip2 install pycrypto && pip2 install pyasn1 && pip2 install cryptography && pip2 install Pillow && pip2 install netaddr && pip2 install scapy && pip2 install dnslib && pip2 install Twisted && pip2 install ipy && pip2 install user_agents && pip2 install pyopenssl && pip2 install service_identity && pip2 install configobj && pip2 install Flask && pip2 install dnspython && pip2 install beautifulsoup4 && pip2 install capstone && pip2 install python-magic && pip2 install msgpack-python && pip2 install requests && pip2 install chardet && pip2 install lxml && pip2 install pypcap && pip2 install NetfilterQueue && pip2 install pefile
+$ pip2 install "pefile==2019.4.18"
+$ git clone https://github.com/byt3bl33d3r/MITMf
+$ cd MITMf && git submodule init && git submodule update --recursive
+$ pip2 install -r requirements.txt
