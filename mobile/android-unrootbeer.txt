@@ -1,0 +1,4 @@
+For root detection bypass, you can try download the unrootbeer-debug.apk then drag & drop the emulator. Reboot the emulator and try again open mobile app ^-^
+
+https://github.com/jakev/unrootbeer/raw/master/out/jakev.unrootbeer-debug.apk
+
