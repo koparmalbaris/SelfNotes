@@ -1,0 +1,14 @@
+Tunnel and Portfwd commands samples, examples and again samples
+
+RDP Port Tunneling via SSH cli
+  $ ssh -p 22 -L 13389:10.2.51.57:3389 palpatine@10.0.0.5
+  $ rdesktop localhost:13389
+
+Proxy Tunnel via SSH cli
+  $ ssh -L 8080 kenobi@10.0.0.3
+    
+    Then open Proxy settings on browser and set the Manual Proxy Configuration to 127.0.0.1 8080 port.
+    
+  
+    
+
