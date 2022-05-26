@@ -1,0 +1,15 @@
+# Genymotion APK Installation Error Solution
+
+Error: "An error occurred while deploying the file. This probably means that the app contains ARM native code and your Genymotion device cannot run ARM instructions."
+
+So we need to install ARM translation on the emulator.
+
+$ Download the right ARM translation archive for your device’s Android version. 
+  https://github.com/m9rco/Genymotion_ARM_Translation/tree/master/package
+  
+$ Drag and drop the .zip file to the device’s unlocked screen and click on OK when asked for confirmation
+
+Now you should be able to install any app even if it has ARM code.
+
+
+Ref: https://stackoverflow.com/questions/58459833/unable-to-install-apk-in-android-emulator-app-contains-arm-native-code
