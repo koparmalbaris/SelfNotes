@@ -1,0 +1,9 @@
+If the client PC does not have Bitlocker and Boot or Secure Boot protection;
+
+  1- Plug live kali-linux USB and boot the USB
+
+  2- When opened kaLincox, open terminal and go to "C:\Windows\System32\config" path. Then execute
+  
+    $ samdump2 SYSTEM SAM
+    
+cheers
