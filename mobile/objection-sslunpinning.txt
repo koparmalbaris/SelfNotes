@@ -1,0 +1,13 @@
+Objection SSL Unpinning
+
+Set Wi-Fi Proxy (None)
+
+  $ ./frida-server
+  $ .\objection.exe -g com.darkside.palpatineapp explore
+    $ android sslpinning disable
+    
+Set Wi-Fi Proxy to Burp
+
+then smile
+
+Ref: https://book.hacktricks.xyz/mobile-pentesting/android-app-pentesting/frida-tutorial/objection-tutorial
