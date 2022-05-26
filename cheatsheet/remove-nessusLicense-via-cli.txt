@@ -1,0 +1,6 @@
+Remove Nessus License via cli
+
+$ /sbin/service nessusd stop
+
+$ /opt/nessus/sbin/nessuscli fix --reset
+
