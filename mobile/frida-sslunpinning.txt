@@ -1,0 +1,5 @@
+When use ssl unpinning methods via Frida, you need to push burp cert to phone (pls push to frida-server file path)
+
+  $ adb push burpca-cert-der.crt /data/local/tmp/cert-der.crt
+  
+ 
