@@ -1,0 +1,3 @@
+Swaks SMTP Relay Command
+
+$ swaks --to palpatine@darkside.local --from "kenobi@darkside.local" --header "Subject: This is a power of smtp relay" --body "This is a relay mail test for 4rch." --server smtpserver.domain.local --port 25
