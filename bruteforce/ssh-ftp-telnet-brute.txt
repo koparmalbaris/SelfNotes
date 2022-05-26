@@ -1,4 +1,4 @@
-Brute force attacks can be carried out on SSH, FTP and Telnet services detected during network penetration tests.
+Brute force attacks can be carried out on detected SSH, FTP and Telnet services during network penetration tests.
 
 Useful Wordlist
 https://github.com/danielmiessler/SecLists
