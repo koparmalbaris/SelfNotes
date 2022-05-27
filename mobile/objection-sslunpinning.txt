@@ -2,7 +2,8 @@ Objection SSL Unpinning
 
 Set Wi-Fi Proxy (None)
   $ pip3 install objection
-  $ ./frida-server
+  $ adb shell
+    $ ./frida-server
   $ .\objection.exe -g com.darkside.palpatineapp explore
     $ android sslpinning disable
 Set Wi-Fi Proxy to Burp
