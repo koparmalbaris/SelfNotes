@@ -1,0 +1,3 @@
+Manual Nessus Plugins Update Command
+
+$ /opt/nessus/sbin/nessuscli fetch --register xxxx-xxxx-xxxx-xxxx
