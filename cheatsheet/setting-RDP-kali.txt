@@ -1,11 +1,16 @@
-Setting up RDP with Xfce
+## 1 ## Setting up RDP with Xfce
 
-$ wget https://gitlab.com/kalilinux/build-scripts/kali-wsl-chroot/-/raw/master/xfce4.sh
+  $ wget https://gitlab.com/kalilinux/build-scripts/kali-wsl-chroot/-/raw/master/xfce4.sh
+  $ chmod +x xfce4.sh
+  $ ./xfce4.sh
+  $ systemctl enable xrdp --now
 
-$ chmod +x xfce4.sh
+      Ref: https://www.kali.org/docs/general-use/xfce-with-rdp/
 
-$ ./xfce4.sh
+## 2 ## Setting up RDP with xrdp
 
-$ systemctl enable xrdp --now
-
-Ref: https://www.kali.org/docs/general-use/xfce-with-rdp/
+  $ apt-get install xrdp
+  $ service xrdp start
+  $ service xrdp-sesman start
+  $ update-rc.d xrdp enable 
+  $ systemctl enable xrdp --now
