@@ -1,0 +1,14 @@
+Check ICMP Tunnel
+
+  $ ping bariskoparmal.com
+  
+ICMP Tunnel Exploitation
+
+  Step 1: Server-side
+    $ ptunnel -v 4
+    
+   Step 2: Client-side
+    $ ptunnel -p <ServerIP> -lp 2222 -da 127.0.0.1 -dp 22 -c eth0 -v 4
+    
+   Step3: Client-side
+    $ ssh <username>@127.0.0.1 -p 2222
