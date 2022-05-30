@@ -1,0 +1,8 @@
+## Docker Gophish Run Command:
+
+	docker run -dit --ip <PublicIP> -p 1337:1337 -p 80:80 --name BK-gophish gophish/gophish
+
+## Log
+
+	time="2021-12-02T20:04:52Z" level=info msg="Starting phishing server at http://0.0.0.0:80"
+	time="2021-12-02T20:04:52Z" level=info msg="Starting admin server at https://0.0.0.0:1337"
