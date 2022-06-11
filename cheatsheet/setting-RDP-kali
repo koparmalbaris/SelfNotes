@@ -14,3 +14,9 @@
   $ service xrdp-sesman start
   $ update-rc.d xrdp enable 
   $ systemctl enable xrdp --now
+
+## 3 ## RDP Command samples on terminal
+
+  $ xfreerdp /u:hacktrick24 /p:'QWEqwe123' /v:184.73.9.202
+  
+  $ rdesktop -u hacktrick24 184.73.9.202
