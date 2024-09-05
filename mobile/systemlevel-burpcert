@@ -19,5 +19,9 @@ HOWTO
 
 ^-^
 
+Proxy configurations:
+hostname: 10.0.2.2
+port: 8080
+
 Ref: https://0xf61.gitlab.io/blog/androidburpsetup/
 Ref: https://blog.ropnop.com/configuring-burp-suite-with-android-nougat/
