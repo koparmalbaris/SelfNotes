@@ -41,3 +41,4 @@ port: 8080
 
 Ref: https://0xf61.gitlab.io/blog/androidburpsetup/
 Ref: https://blog.ropnop.com/configuring-burp-suite-with-android-nougat/
+Ref: https://github.com/MobSF/docs/blob/master/dynamic_analyzer.md
