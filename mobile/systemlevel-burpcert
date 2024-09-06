@@ -14,7 +14,7 @@ HOWTO
 	Pixel_XL_API_25
 
 
-	!> Only Android images upto **API 28** is supported! Newer Android AVDs does not offer a writable `/system` and hence cannot work with MobSF.
+	!> Only Android images upto **API 28** is supported! Newer Android AVDs does not offer a writable `/system`.
 
 
 	**Run Android Virtual Device (AVD)**		
