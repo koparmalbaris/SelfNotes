@@ -1,0 +1,8 @@
+Gophish Password Recovery method
+
+$ sqlite3 gophish.db
+    $$ update users set hash="$2a$10$IYkPp0.QsM81lYYPrQx6W.U6oQGw7wMpozrKhKAHUBVL4mkm/EvAS" where username="admin";
+    
+The password for the "admin" user is now "gophish".
+
+what a week, huh?

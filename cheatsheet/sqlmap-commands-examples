@@ -1,0 +1,8 @@
+some sqlmap command examples
+
+$ sqlmap -r sql.txt --dbs --random-agent --ignore-proxy
+
+$ sqlmap -r sql2.txt --risk 3 --level 5 --threads 10 --dbms=postgresql
+
+$ sqlmap -r sql3.txt --risk 3 --level 5 --ignore-code 401 --dbms=mysql -p userid --threads 10 --random-agent
+

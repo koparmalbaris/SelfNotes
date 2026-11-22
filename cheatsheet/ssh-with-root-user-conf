@@ -1,0 +1,9 @@
+SSH with root user configuration
+
+$ sudo apt -y install kali-root-login
+$ passwd root
+
+$ nano /etc/ssh/sshd_config
+Delete # character on "PermitRootLogin" line. And change "prohibit-password" to "yes".
+
+cheers

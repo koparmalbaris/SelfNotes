@@ -1,0 +1,17 @@
+how to give write permission on smbshare;
+
+$ nano /etc/samba/smb.conf
+
+then edit file like below lines.
+
+    ;[profiles]
+    ;   comment = Users profiles
+    ;   path = /home/samba/profiles
+    ;   guest ok = no
+    ;   browseable = no
+    ;   create mask = 0600
+    ;   directory mask = 0700
+        writeable = yes
+        browseable = yes
+        
+welcome
